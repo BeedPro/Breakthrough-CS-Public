@@ -41,6 +41,17 @@ class Breakthrough():
 		self.__LockSolved = False
 		self.__LoadLocks()
 	
+	def Test(self):
+		"""
+		Test Function
+		"""
+		d = DifficultyCard()
+		self.__SetupGame()
+		print(self.__CheckIfKeyInHand())
+			
+
+
+
 	def __SaveFile(self):
 		with open(f"dev/{input('What is the name of file:> ')}.txt", "w+") as saveFile:
 			### Writes Score to the save file
@@ -332,6 +343,12 @@ class Breakthrough():
 		"""
 		return self.__Locks[random.randint(0, len(self.__Locks) - 1)]
 
+	def __CheckIfKeyInHand(self):
+		for i in range(5):
+			if self.__Hand.GetCardDescriptionAt(i)[0] == "K":
+				return True 
+		return False
+
 	def __GetCardFromDeck(self, CardChoice):
 		"""
 		From the Deck get the Card if the Deck is not empty and handles Diff cards. Number of cards decrease as it is put on the hand and is 
@@ -344,10 +361,20 @@ class Breakthrough():
 				print()
 				print("Difficulty encountered!")
 				print(self.__Hand.GetCardDisplay())
+				KeyInHand = self.__CheckIfKeyInHand()
 				print("To deal with this you need to either lose a key ", end='')
 				Choice = input(
-					"(enter 1-5 to specify position of key) or (D)iscard five cards from the deck:> ")
+					"(enter 1-5 to specify position of key) or if you don't have a key then (D)iscard five cards from the deck:> ")
 				print()
+				if KeyInHand:
+					try:
+						ChoiceAsInteger = int(Choice)
+						while self.__Hand.GetCardDescriptionAt(ChoiceAsInteger)[0] != "K":
+							print("That was not key")
+							Choice = input(
+						"(enter 1-5 to specify position of key) or if you don't have a key then (D)iscard five cards from the deck:> ")
+					except:
+						pass
 				self.__Discard.AddCard(CurrentCard)
 				CurrentCard.Process(self.__Deck, self.__Discard, self.__Hand,
 									self.__Sequence, self.__CurrentLock, Choice, CardChoice)
@@ -642,6 +669,7 @@ class DifficultyCard(Card):
 		Getter for getting the description
 		"""
 		return self._CardType
+			
 
 	def Process(self, Deck, Discard, Hand, Sequence, CurrentLock, Choice, CardChoice):
 		"""
@@ -653,6 +681,7 @@ class DifficultyCard(Card):
 			ChoiceAsInteger = int(Choice)
 		except:
 			pass
+
 		if ChoiceAsInteger is not None:
 			if ChoiceAsInteger >= 1 and ChoiceAsInteger <= 5:
 				if ChoiceAsInteger >= CardChoice:
@@ -663,7 +692,7 @@ class DifficultyCard(Card):
 					CardToMove = Hand.RemoveCard(
 						Hand.GetCardNumberAt(ChoiceAsInteger))
 					Discard.AddCard(CardToMove)
-					return
+					return None
 		Count = 0
 		while Count < 5 and Deck.GetNumberOfCards() > 0:
 			CardToMove = Deck.RemoveCard(Deck.GetCardNumberAt(0))
