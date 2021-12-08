@@ -1,2 +1,2 @@
-rm language = "bash"
+language = "bash"
 run = "python dev/Breakthrough.py"
