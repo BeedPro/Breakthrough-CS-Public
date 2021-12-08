@@ -42,9 +42,11 @@ class Breakthrough():
 		self.__LoadLocks()
 	
 	def __SaveFile(self):
-		with open(f"dev\{input('What is the name of file:> ')}.txt", "w+") as saveFile:
+		with open(f"dev/{input('What is the name of file:> ')}.txt", "w+") as saveFile:
+			### Writes Score to the save file
 			saveFile.write(f"{self.__Score}\n")
 
+			### Iterates through the challenges and then saves each challenge and its condition
 			temp = ''
 			for C in self.__CurrentLock._Challenges:
 				for Con in C._Condition:
@@ -52,6 +54,7 @@ class Breakthrough():
 				temp = temp[:-1] + ";"
 			saveFile.write(f"{temp[:-1]}\n")
 
+			### Checks if the challenge has been met
 			temp = ''
 			for C in self.__CurrentLock._Challenges:
 				if C._Met:
@@ -60,25 +63,29 @@ class Breakthrough():
 					temp += "N;"
 			saveFile.write(f"{temp[:-1]}\n")
 
+			### Iterates over to get the cards of your hand
 			temp = ''
 			for card in range(5):
 				temp += f"{self.__Hand.GetCardDescriptionAt(card)} {self.__Hand.GetCardNumberAt(card)},"
 			saveFile.write(f"{temp[:-1]}\n")
 
+			### Iterates over to get the cards of your sequence
 			temp = ''
 			for card in range(self.__Sequence.GetNumberOfCards()):
 				temp += f"{self.__Sequence.GetCardDescriptionAt(card)} {self.__Sequence.GetCardNumberAt(card)},"
 			saveFile.write(f"{temp[:-1]}\n")		
 
+			### Iterates over to get the cards of your discard
 			temp = ''
 			for card in range(self.__Discard.GetNumberOfCards()):
 				temp += f"{self.__Discard.GetCardDescriptionAt(card)} {self.__Discard.GetCardNumberAt(card)},"
 			saveFile.write(f"{temp[:-1]}\n")
 
+			### Iterates over to get the cards of your Deck
 			temp = ''
 			for card in range(self.__Deck.GetNumberOfCards()):
 				temp += f"{self.__Deck.GetCardDescriptionAt(card)} {self.__Deck.GetCardNumberAt(card)},"
-				saveFile.write(f"{temp[:-1]}")
+			saveFile.write(f"{temp[:-1]}")
 
 	def __ProcessLockSolved(self):
 		'''
@@ -132,7 +139,7 @@ class Breakthrough():
 					print(self.__Sequence.GetCardDisplay())
 					print(self.__Hand.GetCardDisplay())
 					MenuChoice = self.__GetChoice()
-					ValidMenuChoices = ["D", "U"]
+					ValidMenuChoices = ["D", "U", "S"]
 					while MenuChoice.upper() not in ValidMenuChoices:
 						print("Not a valid choice")
 						MenuChoice = self.__GetChoice()
@@ -151,8 +158,8 @@ class Breakthrough():
 							self.__GetCardFromDeck(CardChoice)
 						elif DiscardOrPlay == "P":
 							self.__PlayCardToSequence(CardChoice)
-						else:
-							print("Not a valid choice")
+					elif MenuChoice.upper() == "S":
+						self.__SaveFile()
 					if self.__CurrentLock.GetLockSolved():
 						self.__LockSolved = True
 						self.__ProcessLockSolved()
@@ -192,7 +199,7 @@ class Breakthrough():
 		Choice = input(
 			"Enter L to load a game from a file, anything else to play a new game:> ").upper()
 		if Choice == "L":
-			if not self.__LoadGame("dev/game1.txt"):
+			if not self.__LoadGame("game1.txt"):
 				self.__GameOver = True
 		else:
 			self.__CreateStandardDeck()
@@ -386,7 +393,7 @@ class Breakthrough():
 		Handles the choice of what to do
 		"""
 		print()
-		Choice = input("(D)iscard inspect, (U)se card:> ").upper()
+		Choice = input("(D)iscard inspect, (U)se card, (S)ave game:> ").upper()
 		return Choice
 
 	def __AddDifficultyCardsToDeck(self):
