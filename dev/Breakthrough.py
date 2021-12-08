@@ -132,11 +132,19 @@ class Breakthrough():
 					print(self.__Sequence.GetCardDisplay())
 					print(self.__Hand.GetCardDisplay())
 					MenuChoice = self.__GetChoice()
+					ValidMenuChoices = ["D", "U"]
+					while MenuChoice.upper() not in ValidMenuChoices:
+						print("Not a valid choice")
+						MenuChoice = self.__GetChoice()
 					if MenuChoice == "D":
 						print(self.__Discard.GetCardDisplay())
 					elif MenuChoice == "U":
 						CardChoice = self.__GetCardChoice()
 						DiscardOrPlay = self.__GetDiscardOrPlayChoice()
+						ValidDiscardOrPlayChoice = ["D", "P"]
+						while DiscardOrPlay.upper() not in ValidDiscardOrPlayChoice:
+							print("Not valid choice")
+							DiscardOrPlay = self.__GetDiscardOrPlayChoice()
 						if DiscardOrPlay == "D":
 							self.__MoveCard(
 								self.__Hand, self.__Discard, self.__Hand.GetCardNumberAt(CardChoice - 1))
@@ -144,9 +152,7 @@ class Breakthrough():
 						elif DiscardOrPlay == "P":
 							self.__PlayCardToSequence(CardChoice)
 						else:
-							print("Invalid a valid choice")
-					else:
-						print("Invalid a valid choice")
+							print("Not a valid choice")
 					if self.__CurrentLock.GetLockSolved():
 						self.__LockSolved = True
 						self.__ProcessLockSolved()
@@ -360,10 +366,11 @@ class Breakthrough():
 				Choice = int(
 					input("Enter a number between 1 and 5 to specify card to use:> "))
 				if Choice > 5 or Choice < 1:
-					print("Invalid Number")
+					print("Not a valid number")
 					Choice = None
 			except:
-				pass
+				print("A number was not inputed")
+				Choice = None
 		return Choice
 
 	def __GetDiscardOrPlayChoice(self):
@@ -371,6 +378,7 @@ class Breakthrough():
 		Handles the choice of playing or discarding a card
 		"""
 		Choice = input("(D)iscard or (P)lay?:> ").upper()
+
 		return Choice
 
 	def __GetChoice(self):
