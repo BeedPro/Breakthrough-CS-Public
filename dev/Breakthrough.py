@@ -146,6 +146,7 @@ class Breakthrough():
 				while not self.__LockSolved and not self.__GameOver:
 					print()
 					print("Current score:", self.__Score)
+					print(f"Cards remaining in deck: {self.__Deck.GetNumberOfCards()}")
 					print(self.__CurrentLock.GetLockDetails())
 					print(self.__Sequence.GetCardDisplay())
 					print(self.__Hand.GetCardDisplay())
