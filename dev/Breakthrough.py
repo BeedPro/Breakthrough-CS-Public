@@ -345,7 +345,7 @@ class Breakthrough():
 		return self.__Locks[random.randint(0, len(self.__Locks) - 1)]
 
 	def __CheckIfKeyInHand(self):
-		for i in range(5):
+		for i in range(4):
 			if self.__Hand.GetCardDescriptionAt(i)[0] == "K":
 				return True 
 		return False
@@ -368,14 +368,14 @@ class Breakthrough():
 					"(enter 1-5 to specify position of key) or if you don't have a key then (D)iscard five cards from the deck:> ")
 				print()
 				if KeyInHand:
-					try:
-						ChoiceAsInteger = int(Choice)
-						while self.__Hand.GetCardDescriptionAt(ChoiceAsInteger)[0] != "K":
-							print("That was not key")
-							Choice = input(
-						"(enter 1-5 to specify position of key) or if you don't have a key then (D)iscard five cards from the deck:> ")
-					except:
-						pass
+					while not Choice.isdigit():
+						Choice = input(
+					"(enter 1-5 to specify position of key) or if you don't have a key then (D)iscard five cards from the deck:> ")
+					while self.__Hand.GetCardDescriptionAt(int(Choice)-1)[0] != "K":
+						print("That was not key")
+						Choice = input(
+					"(enter 1-5 to specify position of key) or if you don't have a key then (D)iscard five cards from the deck:> ")
+
 				self.__Discard.AddCard(CurrentCard)
 				CurrentCard.Process(self.__Deck, self.__Discard, self.__Hand,
 									self.__Sequence, self.__CurrentLock, Choice, CardChoice)
@@ -401,10 +401,9 @@ class Breakthrough():
 				Choice = int(
 					input("Enter a number between 1 and 5 to specify card to use:> "))
 				if Choice > 5 or Choice < 1:
-					print("Not a valid number")
-					Choice = None
+					raise Exception
 			except:
-				print("A number was not inputed")
+				print("Not a valid number")
 				Choice = None
 		return Choice
 
@@ -682,12 +681,12 @@ class DifficultyCard(Card):
 			ChoiceAsInteger = int(Choice)
 		except:
 			pass
-
+		
 		if ChoiceAsInteger is not None:
 			if ChoiceAsInteger >= 1 and ChoiceAsInteger <= 5:
 				if ChoiceAsInteger >= CardChoice:
 					ChoiceAsInteger -= 1
-				if ChoiceAsInteger > 0:
+				elif ChoiceAsInteger > 0:
 					ChoiceAsInteger -= 1
 				if Hand.GetCardDescriptionAt(ChoiceAsInteger)[0] == "K":
 					CardToMove = Hand.RemoveCard(
