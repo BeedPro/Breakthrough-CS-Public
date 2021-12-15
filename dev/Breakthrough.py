@@ -679,9 +679,19 @@ class DifficultyCard(Card):
 		ChoiceAsInteger = None
 		try:
 			ChoiceAsInteger = int(Choice)
+			if ChoiceAsInteger < 1 or ChoiceAsInteger > 4:
+				raise Exception
 		except:
-			pass
-		
+			valid = False
+			while not valid:
+				Choice = input("(enter 1-5 to specify position of key) or (D)iscard five cards from the deck:> ")
+				if Choice.upper() == "D":
+					ChoiceAsInteger = None
+					valid = True
+				elif ChoiceAsInteger >= 1 or ChoiceAsInteger <= 4:
+					ChoiceAsInteger = int(Choice)
+					valid = True
+				
 		if ChoiceAsInteger is not None:
 			if ChoiceAsInteger >= 1 and ChoiceAsInteger <= 5:
 				if ChoiceAsInteger >= CardChoice:
