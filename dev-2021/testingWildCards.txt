@@ -1,0 +1,7 @@
+8
+P a,F a,P a;K b;P c,F b,P a;K a
+N;Y;N;Y
+P a 1,F a 2,P b 3,K a 4,P a 5
+K b 20,F c 30,K a 31
+
+P w 6, P b 8, K a 7

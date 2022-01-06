@@ -6,6 +6,11 @@ developed in the Python 3.9 programming environment
 """
 
 """
+TODO:
+	1. Only do the condition in the order they are assigned
+"""
+
+"""
 Importing the libraries
 """
 
@@ -40,20 +45,11 @@ class Breakthrough():
 		self.__CurrentLock = Lock()
 		self.__LockSolved = False
 		self.__LoadLocks()
-	
-	def Test(self):
-		"""
-		Test Function
-		"""
-		d = DifficultyCard()
-		self.__SetupGame()
-		print(self.__CheckIfKeyInHand())
-			
 
 
 
 	def __SaveFile(self):
-		with open(f"dev/{input('What is the name of file:> ')}.txt", "w+") as saveFile:
+		with open(f"dev-2021/{input('What is the name of file:> ')}.txt", "w+") as saveFile:
 			### Writes Score to the save file
 			saveFile.write(f"{self.__Score}\n")
 
@@ -144,6 +140,11 @@ class Breakthrough():
 			while not self.__GameOver:
 				self.__LockSolved = False
 				while not self.__LockSolved and not self.__GameOver:
+					### Delete Block start
+					
+					for c in (self.__CurrentLock._Challenges):
+						print(self.__CurrentLock.CheckIfConditionMet(c))
+					### Delete Block end
 					print()
 					print("Current score:", self.__Score)
 					print(f"Cards remaining in deck: {self.__Deck.GetNumberOfCards()}")
@@ -195,7 +196,7 @@ class Breakthrough():
 
 	def __CheckIfPlayerHasLost(self):
 		"""
-		Checks if player has lost when the cards in the deck has run out
+		Checks if player has lost when the cards in the deck has run out 
 		"""
 		if self.__Deck.GetNumberOfCards() == 0:
 			print(
@@ -295,7 +296,7 @@ class Breakthrough():
 		This is the initisial class to load in the game1.txt file into memeory in order to be be able to play game
 		"""
 		try:
-			with open(f"dev/{FileName}") as f:
+			with open(f"dev-2021/{FileName}") as f:
 				LineFromFile = f.readline().rstrip()
 				self.__Score = int(LineFromFile)
 				LineFromFile = f.readline().rstrip()
@@ -322,7 +323,7 @@ class Breakthrough():
 		"""
 		Getting the challanges from the locks.txt and putting in the __Locks array and to be used later in the game
 		"""
-		FileName = "dev/locks.txt"
+		FileName = "dev-2021/locks.txt"
 		self.__Locks = []
 		try:
 			with open(FileName) as f:
