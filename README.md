@@ -1,12 +1,10 @@
 # Breakthrough-CS-Public
 Pre-Release of Computer Science
 
-Special thanks to the following developers for their patches and contributions (in order of importance):
+Special thanks to the following developers for their patches and contributions (in order of contribution):
 
-_Halludba 🙊
-Beed 🍌,Woggy🦧
-
-## USER INTERFACE
+_Halludba :speak_no_evil:, Beed :banana: Woggy :space_invader:
+# USER INTERFACE
 
 ```
 Enter L to load a game from a file, anything else to play a new game:> l
@@ -55,7 +53,7 @@ The file is stored as the following:
   * ToolType Kit CardNum
 * Card in Deck  
   * ToolType Kit CardNum
-* 🙊🍌
+* :speak_no_evil: :banana:
 
 ## Links
 
