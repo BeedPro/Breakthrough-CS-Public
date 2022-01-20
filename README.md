@@ -1,11 +1,10 @@
 # Breakthrough-CS-Public
 Pre-Release of Computer Science
 
-Special thanks to the following developers for their patches and contributions (alphabetically):
+Special thanks to the following developers for their patches and contributions (in order of importance):
 
-_Halludba,
-Beed 🍌,
-Woggy
+_Halludba 🙊
+Beed 🍌,Woggy🦧
 
 ## USER INTERFACE
 
