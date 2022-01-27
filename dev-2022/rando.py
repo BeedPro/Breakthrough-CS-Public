@@ -105,11 +105,10 @@ class Breakthrough():
             print()
             self.__Score += 5
         if self.__CurrentLock.IsPartial(self.__Sequence):
-            self.__BonusPool += 5
-            self.__Score += self.__BonusPool
-        else:
-            self.__BonusPool = 0
-        print(f"The Bonus Pool is {self.__BonusPool}")
+                        self.__BonusPool += 5
+                        self.__Score += self.__BonusPool
+                else:
+                        self.__BonusPool = 0 
 
     def __CheckIfLockChallengeMet(self):
         SequenceAsString = ""
@@ -293,20 +292,8 @@ class Lock():
         self._Challenges.append(C)
 
     def IsPartial(self, Sequence):
-        PreviousAddedCard = Sequence.GetCards()[-2] if Sequence.GetNumberOfCards() >= 2 else None
-        NewAddedCard = Sequence.GetCards()[-1]
+                print(Sequence)
 
-        for C in self._Challenges:
-            Condition = C.GetCondition()
-            if len(Condition) == 1:
-                if NewAddedCard.GetDescription() in Condition:
-                    return True
-            CardsPlayedConsecutive = NewAddedCard.GetDescription() in Condition and PreviousAddedCard in Condition
-            if CardsPlayedConsecutive:
-                return True
-            
-        return False
-        
     def __ConvertConditionToString(self, C):
         ConditionAsString = ""
         for Pos in range(0, len(C) - 1):
@@ -435,9 +422,6 @@ class CardCollection():
 
     def GetName(self):
         return self._Name
-
-    def GetCards(self):
-        return self._Cards
 
     def GetCardNumberAt(self, X):
         return self._Cards[X].GetCardNumber()
